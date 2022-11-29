@@ -104,7 +104,7 @@
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
       output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
-      message.innerHTML = "";
+      let message = "";
 
       try {
         if(firstNum == "") throw "Empty";
@@ -115,7 +115,7 @@
         if(secondNum < 0) throw "Negative";
       }
       catch(err) {
-        message.innerHTML = "Error: " + err + ".";
+        throw new Error("Error :" + err);
       }
       finally {
         console.log("reached finally");
