@@ -87,6 +87,14 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+  window.TrackJS && TrackJS.install({ 
+    token: "653c269c4e514684ae3ef6b110c47f1e"
+    // for more configuration options, see https://docs.trackjs.com
+  });
+  </script>
+                        
   <script>
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -96,12 +104,118 @@
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
       output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      message.innerHTML = "";
+
+      try {
+        if(firstNum == "") throw "Empty";
+        if(secondNum == "") throw "Empty";
+        if(isNaN(firstNum)) throw "Not a number";
+        if(isNaN(secondNum)) throw "Not a number";
+        if(firstNum < 0) throw "Negative";
+        if(secondNum < 0) throw "Negative";
+      }
+      catch(err) {
+        message.innerHTML = "Error: " + err + ".";
+      }
+      finally {
+        console.log("reached finally");
+      }
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
     // Start your code here
     // You may move this JS to another file if you wish
+    const consoleLogButton = errorBtns[0];
+    consoleLogButton.addEventListener('click', (e) => {
+      console.log("Console Log Demo");
+    });
+
+    const consoleErrorButton = errorBtns[1];
+    consoleErrorButton.addEventListener('click', (e) => {
+      console.error("Console Error Demo");
+    });
+
+    const consoleCountButton = errorBtns[2];
+    consoleCountButton.addEventListener('click', (e) => {
+      console.count("Count Button: ");
+    });
+
+    const consoleWarnButton = errorBtns[3];
+    consoleWarnButton.addEventListener('click', (e) => {
+      console.warn("Console Warn Demo");
+    });
+
+    const consoleAssertButton = errorBtns[4];
+    consoleAssertButton.addEventListener('click', (e) => {
+      let number = 2;
+      let assertFalse = "The number is not equal to 3";
+      console.assert(number == 3, assertFalse);
+    });
+
+    const consoleClearButton = errorBtns[5];
+    consoleClearButton.addEventListener('click', (e) => {
+      console.clear();
+    });
+
+    const consoleDirButton = errorBtns[6];
+    consoleDirButton.addEventListener('click', (e) => {
+      console.dir();
+    });
+
+    const consoleDirxmlButton = errorBtns[7];
+    consoleDirxmlButton.addEventListener('click', (e) => {
+      console.dirxml();
+    });
+
+    const consoleGroupStartButton = errorBtns[8];
+    consoleGroupStartButton.addEventListener('click', (e) => {
+      console.group();
+    });
+
+    const consoleGroupEndButton = errorBtns[9];
+    consoleGroupEndButton.addEventListener('click', (e) => {
+      console.groupEnd();
+    });
+
+    const consoleTableButton = errorBtns[10];
+    consoleTableButton.addEventListener('click', (e) => {
+      console.table(["CSE101", "CSE105","CSE110", "CSE120"]);
+    });
+
+    const consoleTimerStartButton = errorBtns[11];
+    consoleTimerStartButton.addEventListener('click', (e) => {
+      console.time();
+    });
+
+    const consoleTimerEndButton = errorBtns[12];
+    consoleTimerEndButton.addEventListener('click', (e) => {
+      console.timeEnd();
+    });
+
+    const consoleTraceButton = errorBtns[13];
+    consoleTraceButton.addEventListener('click', firstFunction);
+    function firstFunction(){
+      secondFunction();
+    }
+    function secondFunction(){
+      thirdFunction();
+    }
+    function thirdFunction(){
+      console.trace();
+    }
+
+    const consoleGlobalErrorButton = errorBtns[14];
+    consoleGlobalErrorButton.addEventListener('click', (e) => {
+      console.log(ThisBug);
+    });
+
+
+    
+    
+    window.onerror = (event, source, lineno, colno, error) => {
+      console.log("Global error occured");
+    };
   </script>
 </body>
 
